@@ -1,0 +1,11 @@
+repository VS (normal) directory(folder)
+
+	One having .git folder in itself is a repository.
+	The difference above sets repository from normal folder.
+
+	A repository is usually abbreviated as repo.
+
+	mono-repo & multi-repo
+
+	mono repo: one repository per one project.
+	multi repo: several repositories per one project.
