@@ -1,0 +1,9 @@
+K. N. KING
+C Programming - A Modern Approach 2nd edition
+
+Chapter 15 - Writing Large Programs
+# Programming Project 4 (p. 375)
+
+Modify the remind.c program of Section 13.5 so that the read_line function is in a
+separate file named readline.c. Create a header file named readline.h that contatins 
+a prototype for the function and have both remind.c and readline.c include this file.
