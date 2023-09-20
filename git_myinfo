@@ -30,3 +30,6 @@ HEAD: 현재 체크아웃한 브랜치의 가장 최신 커밋을 가리키는 �
 TIL 저장소 <-- 구글에서 검색해서 블로그 글 1~2개 정도 읽어오기
 공부했던 내용들 TIL저장소에 추가하기
 https://techblog.woowahan.com/2553/
+
+
+til저장소에 gitignore파일 추가하기
