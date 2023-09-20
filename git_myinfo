@@ -9,3 +9,11 @@ repository VS (normal) directory(folder)
 
 	mono repo: one repository per one project.
 	multi repo: several repositories per one project.
+
+일반적인 경우라면 우리가 브랜치를 체크아웃함
+특정커밋<--브랜치<--HEAD
+
+커밋을 체크아웃 하면
+특정커밋<--HEAD
+
+HEAD: 현재 체크아웃한 브랜치의 가장 최신 커밋을 가리키는 포인터
