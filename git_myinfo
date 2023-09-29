@@ -36,3 +36,6 @@ til저장소에 gitignore파일 추가하기
 
 tablet push check
 
+
+
+우분투 기본 에디터는 nano이다. /usr/bin/select-editor 파일을 실행하면 기본 에디터 설정을 변경할 수 있다.
