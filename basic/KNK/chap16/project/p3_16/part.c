@@ -2,21 +2,19 @@
 #include "part.h"
 #include "readline.h"
 
-part inventory[MAX_PARTS];
-int num_parts = 0;
 
-int find_part(int number) {
-	for (int i = 0; i < num_parts; i++)
+int find_part(int number, part inventory[], int *num_parts) {
+	for (int i = 0; i < *num_parts; i++)
 		if (inventory[i].number == number)
 			return i;
 	return -1;
 }
 
-void insert(void) {
+void insert(part inventory[], int *num_parts) {
 	int part_number;
 	int insertion_point;
 
-	if (num_parts == MAX_PARTS) {
+	if (*num_parts == MAX_PARTS) {
 		printf("Database si full; can't add more parts.\n");
 		return;
 	}
@@ -24,19 +22,19 @@ void insert(void) {
 	printf("Enter part number: ");
 	scanf("%d", &part_number);
 
-	if (find_part(part_number) >= 0) {
+	if (find_part(part_number, inventory, num_parts) >= 0) {
 		printf("Part already exists.\n");
 		return;
 	}
 
 	// Find index where the insertion is done.
-	for (insertion_point = 0; insertion_point < num_parts; insertion_point++) {
+	for (insertion_point = 0; insertion_point < *num_parts; insertion_point++) {
 		if (inventory[insertion_point].number > part_number)
 			break;
 	}
 
 	// Push parts that has larger part number than that of insertion part.
-	for (int i = num_parts; i > insertion_point; i--)
+	for (int i = *num_parts; i > insertion_point; i--)
 		inventory[i] = inventory[i - 1];
 
 	inventory[insertion_point].number = part_number;
@@ -46,15 +44,15 @@ void insert(void) {
 	printf("Enter quantity on hand: ");
 	scanf("%d", &inventory[insertion_point].on_hand);
 
-	num_parts++;
+	(*num_parts)++;
 }
 
-void search(void) {
+void search(part inventory[], int *num_parts) {
 	int i, number;
 
 	printf("Enter part number: ");
 	scanf("%d", &number);
-	i = find_part(number);
+	i = find_part(number, inventory, num_parts);
 
 	if (i >= 0) {
 		printf("Part name: %s\n", inventory[i].name);
@@ -64,12 +62,12 @@ void search(void) {
 		printf("Part not found.\n");
 }
 
-void update(void) {
+void update(part inventory[], int *num_parts) {
 	int i, number, change;
 
 	printf("Enter part number: ");
 	scanf("%d", &number);
-	i = find_part(number);
+	i = find_part(number, inventory, num_parts);
 
 	if (i >= 0) {
 		printf("Enter change in quantity on hand: ");
@@ -80,9 +78,9 @@ void update(void) {
 		printf("Part not found.\n");
 }
 
-void print(void) {
+void print(part inventory[], int *num_parts) {
 	printf("Part number\t" "Part name\t\t" "Quantity on hand\n");
-	for (int i = 0; i < num_parts; i++) {
+	for (int i = 0; i < *num_parts; i++) {
 		printf("%7d\t\t""%-25s%11d\n", inventory[i].number, inventory[i].name,
 				inventory[i].on_hand);
 	}

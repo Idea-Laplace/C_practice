@@ -8,6 +8,7 @@ typedef struct {
 	int number;
 	char name[NAME_LEN + 1];    // 1 is for the null character.
 	int on_hand;
+	int price;
 } part;
 
 
@@ -16,7 +17,7 @@ typedef struct {
  *             Returns the array index if the part number is
  *             found; otherwise, returns -1
  **/
-int find_part(int number);
+int find_part(int number, part inventory[], int *num_parts);
 
 /**
  * insert : Prompts the user for information about a new part
@@ -24,7 +25,7 @@ int find_part(int number);
  *          an error message and returns prematurely if the part
  *          already exists or the database is full.
  **/
-void insert(void);
+void insert(part inventory[], int *num_parts);
 
 /**
  * search : Prompts the user to enter a part number, then looks up
@@ -32,7 +33,7 @@ void insert(void);
  *          the name and quantity on hand; if not, prints an error
  *          message.
  **/
-void search(void);
+void search(part inventory[], int *num_parts);
 
 /**
  * update: Prompts the user to enter a part number.
@@ -40,13 +41,13 @@ void search(void);
  *         otherwise, prompts the user to enter change in quantity
  *         on hand and updates the database.
  **/
-void update(void);
+void update(part inventory[], int *num_parts);
 
 /**
  * print : Prints a listing of all parts in the database.
  *         Showing the part number, part name, and quantity
  *         on hand. Parts are sorted by part number.
  **/
-void print(void);
+void print(part inventory[], int *num_parts);
 
 #endif
