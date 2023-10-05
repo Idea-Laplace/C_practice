@@ -7,7 +7,7 @@ struct node {
 	struct node *next;
 };
 
-void add_node(struct node *linked_list, int value);
+void add_node(struct node **linked_list, int value);
 struct node *search_node(struct node *linked_list, int value);
 struct node *delete_node(struct node *linked_list, int value);
 
