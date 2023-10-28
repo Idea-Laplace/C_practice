@@ -39,7 +39,3 @@ struct node *delete_node(struct node *linked_list, int value) {
 
 	return linked_list;
 }
-	
-
-
-
