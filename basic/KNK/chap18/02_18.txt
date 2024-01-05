@@ -1,0 +1,14 @@
+(a) Which storage class is used primarily to indicate that a variable 
+	or fuction can be shared by files?
+
+	extern
+
+(b) Suppose that a variable x is to be shared by several functions in
+	one file but hidden from functions in other files. which storage class
+	should x be declared to have?
+
+	static
+
+(c) Which storage classes can affect the storage duration of a variable?
+	
+	extern, static

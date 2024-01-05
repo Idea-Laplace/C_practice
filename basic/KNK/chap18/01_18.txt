@@ -1,0 +1,27 @@
+(a) static char **lookup(int level);
+storage class: static
+type qualifier: None
+type specifier: char
+declarators : **lookup(int level)
+initializer : none
+
+(b) volatile unsigned long io_flags;
+storage class: volatile
+type qualifier: None
+type specifier: unsigned long
+declarators : io_flags
+initializer : none
+
+(c) extern char *file_name[MAX_FILES], path[];
+storage class: extern
+type qualifier: None
+type specifier: char
+declarators : *file_name[MAX_FILES], path[]
+initializer : none
+
+(d) static const char token_buf[] = "";
+storage class: static
+type qualifier: const
+type specifier: char
+declarators: token_buf[]
+initializer: "" (or '\0')

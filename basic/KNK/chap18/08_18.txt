@@ -1,0 +1,20 @@
+Write a complete description of the type of x as specified by
+each of the following declarations.
+
+(a) char (*x[10])(int);
+
+Ans) arrays of pointers for functions that has one int parameter and returns char type value/
+
+(b) int (*x(int))[5];
+
+Ans) A function having int variable as its parameter and returns a pointer of int array.
+
+(c) float *(*x(void))(int);
+
+Ans) a void function that returns a pointer of a function, which
+	read int parameter and returns a pointer for float.
+
+(d) void (*x(int, void (*y)(int)))(int);
+
+Ans) A function which has int and pointer to a function having int argument and returning void pointer
+	as its arguments, and it returns the pointer to a void function having one int argument.

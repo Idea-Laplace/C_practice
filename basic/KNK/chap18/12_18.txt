@@ -1,0 +1,12 @@
+(a) Write a complete description of the type of the function f, assuming that it's
+declared as follows:
+
+int (*f(float (*)(long), char *))(double);
+
+A function which returns a pointer to a function having double type argument and returning
+int value.
+
+The function takes 2 arguments, one is a pointer to a function that takes a long int type,
+	and the other is a pointer to char type value.
+
+(b) int n = (*f(fp, str))(3.14159)

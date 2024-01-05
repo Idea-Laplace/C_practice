@@ -1,0 +1,11 @@
+Which property of a variable determines whether or not it has
+a default initial value?
+
+(a) Storage duration
+(b) Scope
+(c) Linkage
+(d) Type
+
+(a). Variables with static storage duration are initialized to zero by default;
+variables with automatic storage duration have no default initial value.
+

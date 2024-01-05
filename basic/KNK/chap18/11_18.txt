@@ -1,0 +1,11 @@
+In section 18.4, we saw that the following delarations are illegal:
+
+int f(int)[]; // Functions cannot return arrays.
+int g(int)(int); // Functions cannot return functions.
+int a[10](int); // Array elements cannot be functions.
+
+Sol)
+
+int (*f(int))[];   // braces can be omitted.
+int (*g(int))(int);
+int (*a[10])(int);

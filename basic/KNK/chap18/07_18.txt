@@ -1,0 +1,14 @@
+Suppose that we declare x to be an const object.
+Which one of the following statement about x is false?
+
+(a) If x is of type int, it can be used as the value of a case label
+	in a switch statement
+
+	Ans) False, Even though x is a const object, It does not mean that x is constant.
+		the value of x can be altered whenever it is delcared.
+
+(b) The compiler will check that no assignment is made to x.
+
+(c) x is subject to the same scope rule as variables.
+
+(d) x can be of any type

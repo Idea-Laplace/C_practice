@@ -1,0 +1,34 @@
+Use a series of type definitions to simplify each of the declarations in Exercise 8.
+
+(a) char (*x[10])(int);
+
+Sol)
+typedef char PCI(int);
+typedef PCI *PCI_ptr;
+typedef PCI_ptr PCI_ptr_arr[10];
+PCI_ptr_arr x;
+
+(b) int (*x(int))[5];
+
+Sol)
+typedef int IntArr[5];
+typedef IntArr *IntArrPtr;
+typedef IntArrPtr fx(int);
+typedef fx x;
+
+(c) float (*x(void))(int);
+
+Sol)
+typedef float itof(int);
+typedef itof *itof_ptr;
+typedef itof_ptr itof_ptr_fx(void);
+itof_ptr_fx *x;
+
+(d) void (*x(int, void (*y)(int)))(int);
+
+Sol)
+typedef void fx(int);
+typedef fx *fx_ptr;
+typedef void (*y_para)(int);
+typedef fx_ptr nfx(int, y_para);
+nfx x;
