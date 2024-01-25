@@ -11,18 +11,18 @@ struct stack_type {
 };
 
 PRIVATE void terminate(const char *error_msg) {
-	printf("%s\n", error_msg);
+	printf("%s\n");
 	exit(EXIT_FAILURE);
 }
 
 Stack create_arr_stk(int size) {
-	Stack ptr_to_stk = malloc(sizeof(*ptr_to_stk));
+	Stack ptr_to_stk = malloc(sizeof(struct stack_type));
 	if (ptr_to_stk == NULL)
 		terminate("Error in create: stack could not be created.");
 
 	ptr_to_stk->contents = malloc(size * sizeof(ITEM));
 	if (ptr_to_stk->contents == NULL) {
-		free(ptr_to_stk);
+		free(ptr_to_stk->contents);
 		terminate("Error in create: stack could not be created.");
 	}
 
@@ -49,15 +49,8 @@ bool is_full(Stack stk) {
 }
 
 void push(Stack stk, ITEM value) {
-	if (is_full(stk)) {
-		stk->contents = realloc(stk->contents, 2 * stk->size);
-		if (stk->contents == NULL) {
-			free(stk);
-			terminate("Error in push: stack is full.");
-		}
-		stk->size *= 2;
-	}
-	
+	if (is_full(stk))
+		terminate("Error in push: stack is full.");
 	stk->contents[stk->top++] = value;
 }
 
@@ -72,19 +65,4 @@ ITEM peek(Stack stk) {
 		printf("Stack is empty.\n");
 
 	return stk->contents[stk->top];
-}
-
-void print_stk(Stack stk) {
-	for (int i = 0; i < stk->top; i++) {
-		printf("%2d->", stk->contents[i]);
-	}
-	printf("top\n");
-}
-
-int get_stk_size(Stack stk) {
-	return stk->size;
-}
-
-int get_stk_top(Stack stk) {
-	return stk->top;
 }

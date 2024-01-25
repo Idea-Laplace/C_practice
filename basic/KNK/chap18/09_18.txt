@@ -1,4 +1,4 @@
-Use a series of type definitions to simplify each of the declarations in Exercise 8.
+Use a series of type definitions to simplify each of the declarations in Exercise 9.
 
 (a) char (*x[10])(int);
 
