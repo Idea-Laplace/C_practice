@@ -75,6 +75,8 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Compression cannot be initiated.\n");
 		exit(EXIT_FAILURE);
 	}
+
+	free(file_len);
 	// ----------------------------------------------------------
 
 	pseudo_stack.top = 0;

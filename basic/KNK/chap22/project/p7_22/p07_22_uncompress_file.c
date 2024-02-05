@@ -39,16 +39,18 @@
 
 
 int main(int argc, char **argv) {
+
 	FILE *fp_to_uncompress;
 	FILE *fp_uncompressed;
 	int ch;
 	int extension;
-	char *file_len;
-
+	char *file_name;
+	
+	enum {REPETITION = 0, BYTE = 1};
 	struct {
-		unsigned char top;
-		unsigned char byte;
-	} pseudo_stack;
+		int status;
+		char pair[2];
+	} byte_buff;
 
 
 	// Error handling -------------------------------------------
@@ -57,55 +59,51 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	exetension = strlen(argv[1]) - strlen(".rle");
-	if (strlen(argv[1]) < strlen(".rle")) {
-		fprintf(stderr, "File extension not matched.\n");
-		exit(EXIT_FAILURE);
-	}
-	else if (strcmp(argv[1] + extension, ".rle")) {
+	extension = strlen(argv[1]) - strlen(".rle");
+	if (strcmp(argv[1] + extension, ".rle")) {
 		fprintf(stderr, "File extension not matched.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	if ((fp_original = fopen(argv[1], "rb")) == NULL) {
+	if ((fp_to_uncompress = fopen(argv[1], "rb")) == NULL) {
 		fprintf(stderr, "File %s cannot be opened.\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
-	if ((file_len = malloc(strlen(argv[1]))) == NULL) {
+	if ((file_name = malloc(strlen(argv[1]) + 10)) == NULL) {
 		fprintf(stderr, "Filename for compressed file cannot be created.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	strncpy(file_len, argv[1]);
+	strncpy(file_name, argv[1], extension);
+	strcat(file_name, ".uncompress");
 
-	if ((fp_compressed = fopen(file_len, "wb")) == NULL) {
+
+	if ((fp_uncompressed = fopen(file_name, "wb")) == NULL) {
 		fprintf(stderr, "Compression cannot be initiated.\n");
 		exit(EXIT_FAILURE);
 	}
+
+	free(file_name);
 	// ----------------------------------------------------------
 
-	pseudo_stack.top = 0;
-	while ((ch = fgetc(fp_original)) != EOF) {
-		if (ch == pseudo_stack.byte || pseudo_stack.top == 0) {
-			pseudo_stack.byte = ch;
-			pseudo_stack.top++;
+	byte_buff.status = REPETITION;
+	while ((ch = fgetc(fp_to_uncompress)) != EOF) {
+		if (byte_buff.status == REPETITION) {
+			(byte_buff.pair)[REPETITION] = ch;
+			byte_buff.status = BYTE;
 		}
-		else {
-			fputc(pseudo_stack.top, fp_compressed);
-			fputc(pseudo_stack.byte, fp_compressed);
-			pseudo_stack.byte = ch;
-			pseudo_stack.top = 1;
+
+		else if (byte_buff.status == BYTE) {
+			(byte_buff.pair)[BYTE] = ch;
+			byte_buff.status = REPETITION;
+			for (int i = 0; i < (byte_buff.pair)[REPETITION]; i++)
+				fputc((byte_buff.pair)[BYTE], fp_uncompressed);
 		}
-	}
-	
-	if (pseudo_stack.top) {
-		fputc(pseudo_stack.top, fp_compressed);
-		fputc(pseudo_stack.byte, fp_compressed);
 	}
 
-	fclose(fp_original);
-	fclose(fp_compressed);
+	fclose(fp_to_uncompress);
+	fclose(fp_uncompressed);
 
 	return 0;
 }
