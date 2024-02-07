@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "inventory2.h"
 
+struct part;
+
 
 int main(void) {
 	struct part *inventory2 = NULL;
@@ -15,7 +17,7 @@ int main(void) {
 
 		switch (reply) {
 			case 'i':
-				insert(inventory2);
+				insert(&inventory2);
 				break;
 			case 's':
 				search(inventory2);
@@ -30,7 +32,7 @@ int main(void) {
 				dump(inventory2);
 				break;
 			case 'r':
-				restore(inventory2);
+				restore(&inventory2);
 				break;
 			case 'q':
 				destroy(inventory2);

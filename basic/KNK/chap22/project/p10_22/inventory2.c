@@ -38,10 +38,10 @@ INTERNAL struct part *find_part(struct part *inventory, int number) {
 }
 
 
-void insert(struct part *inventory) {
+void insert(struct part **inventory_addr) {
 	struct part *cur, *prev, *new_node;
 
-	if ((new_node = malloc(sizeof(struct part))) == NULL) {
+	if ((new_node = malloc(sizeof(*new_node))) == NULL) {
 		fprintf(stderr, "Error, list is full.\n");
 		return;
 	}
@@ -50,7 +50,7 @@ void insert(struct part *inventory) {
 	scanf("%d", &new_node->number);
 	FLUSH;
 
-	for (cur = inventory, prev = NULL;
+	for (cur = *inventory_addr, prev = NULL;
 		cur != NULL && new_node->number > cur->number;
 		prev = cur, cur = cur->next);
 
@@ -69,7 +69,7 @@ void insert(struct part *inventory) {
 	new_node->next = cur;
 
 	if (prev == NULL)
-		inventory = new_node;
+		*inventory_addr = new_node;
 	else 
 		prev->next = new_node;
 }
@@ -113,7 +113,7 @@ void update(struct part *inventory) {
 void print(struct part *inventory) {
 	printf("   Part number             NAMES             Quantity on hand   \n");
 	printf("   -----------   -------------------------   ----------------   \n");
-	for (; inventory != NULL; inventory = inventory->next)
+	for (;inventory != NULL; inventory = inventory->next)
 		printf("   %10d   %25s   %16d\n", inventory->number, inventory->name, inventory->on_hand);
 }
 
@@ -137,25 +137,19 @@ void dump(struct part *inventory) {
 		return;
 	}
 
-	for (; inventory != NULL; inventory = inventory->next) {
-		fprintf(fp, "%d,%s,%d\n", inventory->number, inventory->name, inventory->on_hand);
-	}
+	for (; inventory != NULL; inventory = inventory->next)
+		fprintf(fp, "%d,%25s,%d\n", inventory->number, inventory->name, inventory->on_hand);
 
 	fclose(fp);
 	printf("Saved.\n");
 }
 
-void restore(struct part *inventory) {
+void restore(struct part **inventory_addr) {
 	char filename[L_tmpnam];
 	FILE *fp;
-	int input_success;
+	int success;
 	struct part *p, *store_next;
-	struct part *prev = NULL, *cur = inventory;
-
-	if ((p = malloc(sizeof(*p))) == NULL) {
-		printf("Restore failed, memory issue.\n");
-		return;
-	}
+	struct part *pos;
 
 
 	printf("Enter name of input file: ");
@@ -166,31 +160,38 @@ void restore(struct part *inventory) {
 		return;
 	}
 
-	while (fscanf(fp, "%d,%s,%d", &p->number, p->name, &p->on_hand) == 3) {
+	destroy(*inventory_addr);
+	*inventory_addr = NULL;
 
-		if (cur == NULL) {
-			cur = malloc(sizeof(struct part));
-			if (cur == NULL) {
-				printf("Restore failed, memory issue.\n");
-				return;
-			}
-
-			cur->next = NULL;
-			prev->next = cur;
+	for (;;) {
+		if ((p = malloc(sizeof(*p))) == NULL) {
+			printf("Restore failed, memory issue.\n");
+			return;
 		}
 
-		store_next = cur->next;
-		*cur = *p;
-		cur->next = store_next;
+		success = fscanf(fp, "%d,%25[^,],%d", &p->number, p->name, &p->on_hand);
+		if (success != 3 && feof(fp)) {
+			free(p);
+			fclose(fp);
+			printf("Restored.\n");
+			return;
+		}
+		else if (success != 3) {
+			if (ferror(fp))
+				printf("Restore error.\n");
+			else
+				printf("Error unknown.\n");
+			fclose(fp);
+			free(p);
+			exit(EXIT_FAILURE);
+		}
 
-		prev = cur;
-		cur = cur->next;
+		p->next == NULL;
+
+		if (*inventory_addr == NULL)
+			*inventory_addr = p;
+		else
+			pos->next = p;
+		pos = p;
 	}
-
-	if (cur->next != NULL)
-		destroy(cur->next);
-
-	
-	fclose(fp);
-	printf("Restored.\n");
 }
