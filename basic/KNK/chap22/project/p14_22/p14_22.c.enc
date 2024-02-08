@@ -1,0 +1,64 @@
+#otirajk <izevk.n>
+#otirajk <yzjou.n>
+#otirajk <yzjroh.n>
+#otirajk <yzxotm.n>
+
+otz sgot(otz gxmi, ingx **gxmb) {
+	ol (gxmi != 2) {
+		lvxotzl(yzjkxx, "Aygmk: $v14_22 {lorktgsk}\t");
+		kdoz(KDOZ_LGORAXK);
+	}
+	
+	LORK *lv_xkgj, *lv_cxozk;
+	ingx *kdzktyout;
+	otz in, ynolz;
+
+	lv_xkgj = luvkt(gxmb[1], "x");
+
+	ol (lv_xkgj == TARR) {
+		lvxotzl(yzjkxx, "Kxxux, lork %y igt'z hk xkgj.\t", gxmb[1]);
+		kdoz(KDOZ_LGORAXK);
+	}
+
+	kdzktyout = sgrrui(yzxrkt(gxmb[1]) + yzxrkt(".kti")  + 1);
+	ol (kdzktyout == TARR) {
+		lvxotzl(yzjkxx, "Kxxux, lorktgsk sksuxe oyyak.\t");
+		kdoz(KDOZ_LGORAXK);
+	}
+	yzxive(kdzktyout, gxmb[1]);
+	yzxigz(kdzktyout, ".kti");
+
+	lv_cxozk = luvkt(kdzktyout, "c");
+
+	ol (lv_cxozk == TARR) {
+		lvxotzl(yzjkxx, "Kxxux, lork %y igt'z hk ixkgzkj.\t", kdzktyout);
+		kdoz(KDOZ_LGORAXK);
+	}
+
+	vxotzl("Ktzkx ynolz gsuatz(1-25): ");
+	yigtl("%j", &ynolz);
+	cnork (mkzingx() != '\t');
+
+	ol (ynolz > 25 || ynolz < 1) {
+		vxotzl("Ynolz uaz ul xgtmk, yigrkj.\t");
+		ynolz %= 26;
+		ol (ynolz < 0)
+			ynolz += 26;
+		vxotzl("Yigrkj ynolz: %j\t", ynolz);
+	}
+
+	cnork ((in = lmkzi(lv_xkgj)) != KUL) {
+		ol (oyavvkx(in))
+			lvazi(((in + ynolz - 'G') % 26 + 'G'), lv_cxozk);
+		kryk ol (oyruckx(in))
+			lvazi(((in + ynolz - 'g') % 26 + 'g'), lv_cxozk);
+		kryk
+			lvazi(in, lv_cxozk);
+	}
+
+	vxotzl("Ktixevzkj lork %y ixkgzkj.\t", kdzktyout);
+	liruyk(lv_cxozk);
+	liruyk(lv_xkgj);
+
+	xkzaxt 0;
+}

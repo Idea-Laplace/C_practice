@@ -1,10 +1,11 @@
 #ifndef _ITEM_H
 #define _ITEM_H
 
-struct item_info;
-
-void insert(void);
-void 
+int insert(FILE *fp);
+void print(void);
+void save(void);
+void erase_all(void);
+void open(FILE *restore);
 
 #endif
 
