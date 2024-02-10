@@ -1,0 +1,19 @@
+In C and C++, when you're inside a signal handler function, you're limited to a subset of functions that are considered "async-signal-safe". These are functions that are guaranteed to be safe to call within a signal handler context. The reason for this restriction is that signal handlers can interrupt the normal flow of execution of your program at any point, including while other functions are in the middle of executing.
+
+Calling a non-reentrant or non-async-signal-safe function from within a signal handler can lead to various problems, including:
+
+Deadlock: If the function being called internally uses locks or mutexes, and the locks are already held by another part of the program when the signal occurs, calling this function from the signal handler could result in a deadlock.
+
+Resource Corruption: If the function being called internally modifies global variables or data structures, it could leave them in an inconsistent state if interrupted by a signal.
+
+Reentrancy Issues: If the function being called internally is not reentrant (i.e., it cannot be safely interrupted and called again before completing its execution), calling it from a signal handler could lead to unexpected behavior.
+
+Blocking: If the function being called internally performs blocking operations (e.g., I/O operations that may wait indefinitely), it could cause the signal handler to block indefinitely, which is generally not desirable.
+
+For these reasons, it's best practice to only call functions from within signal handlers that are explicitly marked as async-signal-safe by the C or C++ standard. These functions are carefully designed to be safe to call from within signal handlers without causing these types of problems.
+
+
+
+
+
+
