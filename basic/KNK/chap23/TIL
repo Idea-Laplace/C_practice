@@ -1,0 +1,6 @@
+When you compile a source code including <math.h> header file,
+you might get link error for <math.h>, It's because clang or 
+gcc compiler doesn't call <math.h> header by default. In this 
+case, add -lm option when trying compile.
+
+lm: library math

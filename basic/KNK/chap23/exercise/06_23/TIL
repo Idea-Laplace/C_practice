@@ -1,0 +1,12 @@
+Overlap denied.
+strcpy: Copies string until it meets a null character.
+strncpy: Copies string n element, if it meet a null character before
+		copying process ends, it adds a bunch of trailing null characters
+		until it fulls the n characters.
+
+memcpy: Simply copies a string from one to another.
+
+------------------------------------------------------------------
+Overlap permitted.
+memmove: Similar to memcpy, but it is allowed to overlap between
+		source and destination.
