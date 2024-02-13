@@ -1,0 +1,4 @@
+/etc/locale.gen
+
+sudo vim locale.gen
+you can find and disable by above command, but not recommended.

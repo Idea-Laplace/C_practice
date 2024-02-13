@@ -1,3 +1,4 @@
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h> // C89 mb,wc 5 characater function
 
@@ -10,6 +11,7 @@ int mbcheck(const char *s) {
 }
 
 int main(void) {
+	setlocale(LC_ALL, "ja_JP.shift_jis");
 	const char *s[4] = {"\x05\x87\x80\x36\xed\xaa",\
 						"\x20\xe4\x50\x88\x3f",\
 						"\xde\xad\xbe\xef",\

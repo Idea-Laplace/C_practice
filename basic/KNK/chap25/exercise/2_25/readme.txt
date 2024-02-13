@@ -7,7 +7,14 @@ inclusive.) For each of the following strings, give the value that the mbcheck f
 that multibyte characters are encoded using Shift-JIS int the current locale.
 
 "\x05\x87\x80\x36\xed\xaa"
-"\x20\xe4\x50\x88\x3f"
+(\x05) (\x87\x80) (\x36) (\xed(\xaa)   error! -> -1
+
+"x20\xe4\x50\x88\x3f"
+(\x20) (\xe4\x50) (x88(x3f)   error! -> -1
+
 "\xde\xad\xbe\xef"
+(\xde) (\xad)  (\xbe) (\xef   error! -> -1
+
 "\x8a\x60\x92\x74\x41"
+(\x8a\x60) (\x92\x74) (\x41) -> 0
 
