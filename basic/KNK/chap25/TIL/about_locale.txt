@@ -1,0 +1,152 @@
+ISO : International Organization for Standard
+
+<locale.h>
+locale: Typically a country or a region in which a particular language is spoken.
+
+What locale affect to string or character:
+
+1) Formatting of numerical quantities
+2) Formatting of monetary quantities
+3) Character set
+4) Appearance of date and time
+
+Since change of locale affects mnay parts of the library, some of which
+we might prefer not to alter. Fortunately, we're not required to change
+all aspects of a locale at the same time. Instead, we can use one of the
+following 'macros' to specify a category:
+
+Categories:
+
+1) LC_COLLATE
+	Affects the behavior of two string-comparison functions, 'strcoll' and
+	'strxfrm'.(Both functions are declared in <string.h>), strcmp-like functions
+	for locale strings.
+
+2) LC_CTYPE  ***
+	Affects the bebavior of the functions in <ctype.h> (except isdigit and isxdigit).
+	Also affects the multibyte and wide-character functions discussed int this chapter.
+
+3) LC_MONETARY
+	Affects the monetary formatiing information returned by the 'localeconv' function.
+
+4) LC_ NUMERIC
+	Affects the decimal-point character used by formatted I/O functions and the number
+	conversion functions(such as strtod) in <stdlib.h>. Also affects the nonmonetary
+	formatting information returned by the 'localeconv' function.
+
+5) LC_TIME
+	Affects the behaviour of the strftime function (declared in <time.h>), which converts
+	a time into a character string. In C99, also affects the behavior of the wcsftime function.
+
+--------------------------------------------------------------------------------------------------
+
+The above 5 macros, LC_COLLATE, LC_CTYPE, LC_MONETARY, LC_NUMERIC, LC_TIME.
+(possibly more there depending on implementations.)
+
+char *setlocale(int category, const char *locale);
+
+ex) setlocale(LC_ALL, "C");
+LC_ALL: the call will affects all categories.
+The C standard defines only 2 values for the second argument: "C" and "".
+
+Other locales, if and, depend on the implementation.
+
+Especially, setlocale(LC_ALL, "C") occurs at the beginning of program execution behind the scene.
+Explicit call of setlocale changes the locale after the program has behun execution.
+
+"" means native locale
+
+If NULL pointer is passed to the 2nd argument of setlocale, it returns a pointer to a string associated
+with the category in the current locale.
+
+------------------------------------------------------------------------------------------------------
+
+Locales other than "C" and "" vary from one compiler to another. The GNU C library, known as glibc, 
+provides a "POSIX" locale, which is the same as the "C" locale. glibc, which is used by Linux allows
+additional locales to be 'installed' if desired. These locales have the form
+
+language[_territory][.codeset][@modifier]
+
+ex)
+"swedish" (language)
+"en_GB" English-united kingdom (language_territory)
+"en_IE.iso885915@euro" English, Ireland, characterset ISO/IEC 8859-15 character set, euro currency.
+
+
+Linux and  other versions of UNIX support the locale command, which can be used to get locale information.
+One use of the locale command is to get a  list of all available locales,  which can by done by entering:
+
+locale -a
+
+-------------------------------------------------------------------------------------------------
+
+When a call of setlocale succeeds, it returns a pointer to a string associated with the category in
+the new locale..(The string might be the locale name ifself, for example.) On failure, setlocale returns
+a null pointer.
+
+---------------------------------------------------------------------------------------------------------
+
+The localeconv function
+
+struct lconv "localecoiv(void);
+
+in the struct lconv structure, detailed locale information is stored, lconv has static storage duration.
+
+members in the lconv structure fall in two groups, one is char, and the other is char *.
+
+
+
+----------------------------------------------------------------------------------
+Table 25.1 'char *' type :
+"" : meaning not available
+
+Non-monetary
+decimal_point: Decimal-point character
+thousand_sep: Character used to separate groups of digits before decimal point
+grouping    : size of digit groups
+
+Monetary
+mon_deciaml_point
+mon_thousanf_sep
+mon_grouping
+positive_sign : string indicating nonnegative 'quantity'
+negative_sign
+currency_symbol : 'local' currency symbol
+in_curr_symbol : 'international' currency symbol
+
+* local: $, international: USD
+----------------------------------------------------------------------------------
+
+Table 25.2 'char' type: basically for 'monetary' representation
+CHAR_MAX: meaning not available
+
+Local formatting
+frac_digits: Number of digits after decimal point (like %.2f in format string)
+
+(Following prefixs p_ and n_ are for nonnegative, negative repectively.)
+p_cs_precedes : 1 if currency_symbol precedes, 0 if it succeeds the quantity.
+n_ce_precedes
+
+p_sep_by_space: Separation of currency_symbol and sign string from quantity.
+n_sep_by_space;
+// 0: No space separates currency_symbol and quantity.
+// 1: If currency_symbol and sign are adjacent, a space separates them from quantity.
+//    Otherwise, a space separates currency_symbol from quantity.
+//    
+// 2: If currency_symbol and sign are adjacent, a space separates them.
+//    Otherwise, a space separates 'sign' from quantity.
+
+
+p_sign_posn : position of positive)sign for quantity.
+n_sign_posn
+// 0: parentheses surround quantity and currency symbol)
+// 1: Sign precedes quantity and currency symbol
+// 2: Sign succeeds quantity and currency symbol
+// 3: Sign immediately precedes currency symbol
+// 4: sign immediately succeeds currency symbol
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+After entering the command locale -a, the window showed:
+
+C
+C.utf8
+POSIX
