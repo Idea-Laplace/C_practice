@@ -1,0 +1,10 @@
+strto...(const char * restrict nptr,
+		char ** restrict endptr,
+		int base);
+
+nptr: A string you want to convert to a number type.
+endptr: endptr points a pointer(say suc_or_fail, end_ptr = &suc_or_fail);
+After the function call, the suc_or_fail would point to either *nptr or '\0'.
+The former when the coversion failed, the latter when the conversion succeeded.
+
+base literally means base, or radix of number.

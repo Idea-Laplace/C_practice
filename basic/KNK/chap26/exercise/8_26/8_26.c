@@ -1,0 +1,25 @@
+/*
+   Write a statement that randomly assigns one of the numbers 7, 11, 15, or 19
+   to the variable n.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(void) {
+	srand((unsigned) time(NULL));
+
+	int randn;
+
+	for (int i = 0; i < 20; i++) {
+		randn = 7 + 4 * (rand() % 4);
+		printf("%d ", randn);
+	}
+	printf("\n");
+
+	return 0;
+}
+
+
+
